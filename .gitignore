@@ -1,0 +1,68 @@
+# -----------------------------------------------------------------------
+# .gitignore  –  Geocoding Truck Stops
+# -----------------------------------------------------------------------
+
+# ── Directories to exclude entirely ──────────────────────────────────
+reference_code/
+temp/
+.env
+
+# ── Large intermediate CSVs (>100 MB) ────────────────────────────────
+# Stage 1 merge-all intermediates (~750-800 MB each)
+data/1_derived/5_geocode_truck_stops/1_joined_all_sources.csv
+data/1_derived/5_geocode_truck_stops/2_cross_source_distances.csv
+data/1_derived/5_geocode_truck_stops/3_manual_review_ready.csv
+data/1_derived/5_geocode_truck_stops/4_final_coordinates.csv
+
+# YellowPages intermediates (~715 MB each)
+data/1_derived/4_scrape_yellowpages/1_yellowpages_phone_matched.csv
+data/1_derived/4_scrape_yellowpages/2_match_rates.csv
+
+# Analysis tables that duplicate intermediate data (585 MB, 1.2 GB)
+output/2_analysis/tables/1_truckstops_services_website_matching_match_rates.csv
+output/2_analysis/tables/3_yellowpages_website_matching_match_rates.csv
+
+# ── Standard ignores ─────────────────────────────────────────────────
+# Jupyter
+**/.ipynb_checkpoints/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS / editor / IDE
+.DS_Store
+Thumbs.db
+*.bak
+*~
+.claude/
+.vscode/
+
+# Generated docs
+README.html
+README_files/
+
+# Temp files
+temp_terminal_probe.txt
+
+# Large binary formats
+*.parquet
+*.feather
+*.arrow
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.zip
+*.tar.gz
+*.7z
