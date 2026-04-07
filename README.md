@@ -25,8 +25,8 @@ More details on the matching processes and the intermediate/raw files are availa
 
 **Primary outputs:**
 
-- [data/1_derived/5_geocode_truck_stops/8_final_truck_stops_manual.csv](data/1_derived/5_geocode_truck_stops/8_final_truck_stops_manual.csv): The main processed dataset containing all cleaned and geocoded truck stop records (38,135 rows, 31 columns).
-- [data/1_derived/5_geocode_truck_stops/9_supplementary.csv](data/1_derived/5_geocode_truck_stops/9_supplementary.csv): Supplementary file with all matched scraped fields, address standardization, and distance metrics (38,135 rows, 153 columns).
+- [output/1_derived/final_truck_stops.csv](output/1_derived/final_truck_stops.csv): The main processed dataset containing all cleaned and geocoded truck stop records (38,135 rows, 31 columns).
+- [output/1_derived/final_truck_stops_supplementary.csv](output/1_derived/final_truck_stops_supplementary.csv): Supplementary file with all matched scraped fields, address standardization, and distance metrics (38,135 rows, 153 columns).
 
 ## Challenges
 
@@ -145,8 +145,8 @@ When multiple matches are available, the reconciliation follows a hierarchical d
 
 The primary outputs are:
 
-- [data/1_derived/5_geocode_truck_stops/8_final_truck_stops_manual.csv](data/1_derived/5_geocode_truck_stops/8_final_truck_stops_manual.csv): The main processed dataset containing all cleaned and geocoded truck stop records (38,135 rows, 31 columns).
-- [data/1_derived/5_geocode_truck_stops/9_supplementary.csv](data/1_derived/5_geocode_truck_stops/9_supplementary.csv): Supplementary file with all matched scraped fields, address standardization, and distance metrics (38,135 rows, 153 columns).
+- [output/1_derived/final_truck_stops.csv](output/1_derived/final_truck_stops.csv): The main processed dataset containing all cleaned and geocoded truck stop records (38,135 rows, 31 columns).
+- [output/1_derived/final_truck_stops_supplementary.csv](output/1_derived/final_truck_stops_supplementary.csv): Supplementary file with all matched scraped fields, address standardization, and distance metrics (38,135 rows, 153 columns).
 
 Coordinate completion: **~91.0%** of rows have final coordinates (34,699 / 38,135) addresses.
 
@@ -241,7 +241,7 @@ The primary output of this project containing the geocoordinates (latitude and l
 
 ### Supplementary Fields
 
-The supplementary file ([9_supplementary.csv](data/1_derived/5_geocode_truck_stops/9_supplementary.csv)) contains 153 columns for all 38,135 rows, including fields not in the pruned final output:
+The supplementary file ([final_truck_stops_supplementary.csv](output/1_derived/final_truck_stops_supplementary.csv)) contains 153 columns for all 38,135 rows, including fields not in the pruned final output:
 
 - **`address_standardized_ON_parenthesis`**: A human-readable address containing details useful for a trucker that is lost and needs to find a place. This format is not ideal for database matching or geocoding.
 - **`address_standardized_OFF_parenthesis`**: The main address used for matching and geocoding.
@@ -273,7 +273,7 @@ Geocoding_Truck_Stops/
 |       +-- 2_scrape_truckstops_services/
 |       +-- 3_scrape_yelp_truckstops/
 |       +-- 4_scrape_yellowpages/
-|       +-- 5_geocode_truck_stops/              Final geocoded outputs (steps 1-8)
+|       +-- 5_geocode_truck_stops/              Intermediate geocoding outputs (steps 1-7)
 |
 +-- output/                             External data and analysis outputs
 |   +-- 0_raw/                          Scraped data from external sources
@@ -281,6 +281,9 @@ Geocoding_Truck_Stops/
 |   |   +-- 2_yelp_webscraped.csv                  15,689 Yelp business records
 |   |   +-- 3_yellowpages_webscraped.csv           10,533 YellowPages records
 |   |   +-- 4_iexit_webscraped.csv                 iExit highway data
+|   +-- 1_derived/                      Final pipeline outputs
+|   |   +-- final_truck_stops.csv       Primary output: geocoded truck stops (31 columns)
+|   |   +-- final_truck_stops_supplementary.csv  All scraped fields + distance metrics (153 columns)
 |   +-- 2_analysis/                     Tables and figures from analysis notebooks
 |
 +-- source/                             All code (notebooks), organized by stage
@@ -436,5 +439,5 @@ Notebooks can also be run individually in Jupyter. Follow the numbered order wit
 - `data/1_derived/` and `output/` are code-generated artifacts.
 - `temp/` stores intermediate files used by scraping steps.
 - All notebook paths are relative to the project root.
-- Some Stage 1 intermediate CSVs (`1_joined_all_sources.csv` through `4_final_coordinates.csv`) are ~750 MB because they carry match-row-ID list columns. The final outputs (`7_final_truck_stops.csv`, `8_final_truck_stops_manual.csv`) are pruned to ~28 MB.
+- Some Stage 1 intermediate CSVs (`1_joined_all_sources.csv` through `4_final_coordinates.csv`) are ~750 MB because they carry match-row-ID list columns. The final outputs (`final_truck_stops.csv`, `final_truck_stops_supplementary.csv`) are pruned to ~28 MB and ~84 MB respectively.
 - The `2.4.5 Post-reconciliation maps` notebook may fail with `[Errno 12] Cannot allocate memory` on machines with less than 4 GB of free RAM due to large plotly map generation over the 750 MB intermediate files.
